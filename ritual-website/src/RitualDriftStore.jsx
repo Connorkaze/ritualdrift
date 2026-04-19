@@ -45,7 +45,7 @@ const PRODUCTS = [
   },
   {
     id: "logo-sticker-pack",
-    name: "Logo Sticker Pack",
+    name: "Logo Sticker",
     category: "Stickers",
     price: "$14",
     desc: "Durable vinyl stickers for cars, toolboxes, and helmets.",
