@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 const PLACEHOLDER_IMAGE = "/mnt/data/3346c2ef-1b75-4120-bec2-73cdc6a6aeea.png";
 const SIZES = ["S", "M", "L", "XL"];
