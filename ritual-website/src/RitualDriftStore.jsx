@@ -697,7 +697,7 @@ export default function RitualDriftStore() {
         <div style={ui.container}>
           <div style={ui.heroGrid}>
             <div>
-              <div style={ui.badge}>Night-driven apparel & pit gear</div>
+              <div style={ui.badge}>Apparel & Gear</div>
               <h1 style={ui.h1}>Built for the drift culture.</h1>
               <p style={ui.heroText}>
                 RITUAL is a drift team and brand pushing style on and off track.
