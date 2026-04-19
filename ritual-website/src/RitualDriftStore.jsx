@@ -18,8 +18,8 @@ const PRODUCTS = [
     cardLink: "https://buy.stripe.com/test_placeholder_signature_tee",
   },
   {
-    id: "trackside-hoodie",
-    name: "Trackside Hoodie",
+    id: "signature-hoodie",
+    name: "Signature Hoodie",
     category: "Hoodies",
     price: "$68",
     desc: "Premium fleece hoodie built for cold nights at the lot.",
