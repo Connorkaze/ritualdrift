@@ -8,10 +8,10 @@ const PRODUCTS = [
     id: "signature-tee",
     name: "Signature Tee",
     category: "Shirts",
-    price: "$35",
-    desc: "Heavyweight streetwear fit with bold RITUAL branding.",
+    price: "$1",
+    desc: "RITUAL.",
     longDesc:
-      "A clean essential built for daily wear, track nights, and event weekends. The Signature Tee is designed as an easy first-drop staple with a strong branded look.",
+      "RITUAL.",
     hasSizes: true,
     image: placeholder,
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=signature-tee",
@@ -21,10 +21,10 @@ const PRODUCTS = [
     id: "signature-hoodie",
     name: "Signature Hoodie",
     category: "Hoodies",
-    price: "$68",
-    desc: "Premium fleece hoodie built for cold nights at the lot.",
+    price: "$1",
+    desc: "RITUAL.",
     longDesc:
-      "A heavier layer for cooler evenings and track mornings. The Signature Hoodie is meant to feel substantial, clean, and easy to wear with the rest of the RITUAL lineup.",
+      "RITUAL.",
     hasSizes: true,
     image: placeholder,
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=signature-hoodie",
@@ -34,8 +34,8 @@ const PRODUCTS = [
     id: "pit-banner",
     name: "Pit Banner",
     category: "Banners",
-    price: "$45",
-    desc: "Garage and canopy banner with high-contrast logo treatment.",
+    price: "$1",
+    desc: "RITUAL.",
     longDesc:
       "A bold display piece made for pit setups, garage walls, and event canopies. This is a straightforward brand statement piece built to stand out in person and in photos.",
     hasSizes: false,
@@ -47,8 +47,8 @@ const PRODUCTS = [
     id: "logo-sticker-pack",
     name: "Logo Sticker",
     category: "Stickers",
-    price: "$14",
-    desc: "Durable vinyl stickers for cars, toolboxes, and helmets.",
+    price: "$1",
+    desc: "RITUAL.",
     longDesc:
       "A simple add-on product that works well for supporters, event pickups, and online orders. Great for cars, laptops, boxes, helmets, and shop setups.",
     hasSizes: false,
@@ -60,8 +60,8 @@ const PRODUCTS = [
     id: "team-plate",
     name: "Team Plate",
     category: "License Plates",
-    price: "$22",
-    desc: "Metal display plate made for wall setups and show builds.",
+    price: "$1",
+    desc: "RITUAL.",
     longDesc:
       "A display plate built for interior setups, garage walls, and show-car presentation. It keeps the RITUAL identity visible even when the car is parked.",
     hasSizes: false,
@@ -73,18 +73,18 @@ const PRODUCTS = [
 
 const GALLERY = [
   {
-    title: "Night Runs",
-    text: "Built for the drivers, pit crews, and late-night sessions that make the culture.",
+    title: "Placeholder",
+    text: "RITUAL.",
     image: placeholder,
   },
   {
-    title: "Track Presence",
-    text: "Merch and visuals that hit as hard as the cars look under lights.",
+    title: "Placeholder",
+    text: "RITUAL.",
     image: placeholder,
   },
   {
-    title: "Crew Energy",
-    text: "RITUAL is about style, noise, smoke, and the people behind it.",
+    title: "Placeholder",
+    text: "RITUAL.",
     image: placeholder,
   },
 ];
