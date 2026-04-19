@@ -41,7 +41,7 @@ const PRODUCTS = [
     cardLink: "https://buy.stripe.com/test_placeholder_pit_banner",
   },
   {
-    id: "logo-sticker-pack",
+    id: "logo-sticker",
     name: "Logo Sticker",
     category: "Stickers",
     price: "$1",
@@ -49,8 +49,8 @@ const PRODUCTS = [
     longDesc: "description unavailable",
     hasSizes: false,
     image: PLACEHOLDER_IMAGE,
-    paypalLink: "https://www.paypal.com/checkoutnow?placeholder=logo-sticker-pack",
-    cardLink: "https://buy.stripe.com/test_placeholder_logo_sticker_pack",
+    paypalLink: "https://www.paypal.com/checkoutnow?placeholder=logo-sticker",
+    cardLink: "https://buy.stripe.com/test_placeholder_logo_sticker",
   },
   {
     id: "team-plate",
@@ -67,26 +67,10 @@ const PRODUCTS = [
 ];
 
 const GALLERY = [
-  {
-    title: "",
-    text: "",
-    image: PLACEHOLDER_IMAGE,
-  },
-  {
-    title: "",
-    text: "",
-    image: PLACEHOLDER_IMAGE,
-  },
-  {
-    title: "",
-    text: "",
-    image: PLACEHOLDER_IMAGE,
-  },
-  {
-    title: "",
-    text: "",
-    image: PLACEHOLDER_IMAGE,
-  },
+  { id: "gallery-1", image: PLACEHOLDER_IMAGE },
+  { id: "gallery-2", image: PLACEHOLDER_IMAGE },
+  { id: "gallery-3", image: PLACEHOLDER_IMAGE },
+  { id: "gallery-4", image: PLACEHOLDER_IMAGE },
 ];
 
 export default function RitualDriftStore() {
@@ -232,8 +216,7 @@ export default function RitualDriftStore() {
               </div>
 
               <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-white/5 p-5 text-sm leading-7 text-white/60">
-                Payment links are placeholders for now. Once your final products are ready, swap each
-                product’s PayPal and Stripe link with the live checkout URLs.
+                Payment links are currently placeholder checkout URLs for PayPal and Stripe.
               </div>
             </div>
           </div>
@@ -383,12 +366,20 @@ export default function RitualDriftStore() {
       <section id="about" className="border-y border-white/10 bg-zinc-950/80">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 md:grid-cols-[1.2fr_0.8fr] md:px-10">
           <div>
-            <div className="text-xs uppercase tracking-[0.35em] text-white/45 flex items-center gap-4">About RITUAL <span className="rounded-full border border-white/20 px-3 py-1 text-[10px] tracking-[0.25em]">EST. 2025</span></div>
+            <div className="text-xs uppercase tracking-[0.35em] text-white/45 flex items-center gap-4">
+              About RITUAL
+              <span className="rounded-full border border-white/20 px-3 py-1 text-[10px] tracking-[0.25em]">
+                EST. 2025
+              </span>
+            </div>
             <h2 className="mt-3 text-4xl font-black uppercase tracking-[0.08em] md:text-5xl">
               More than merch.
             </h2>
             <p className="mt-6 max-w-3xl text-base leading-8 text-white/70">
-              Founded in 2025 and based out of <span className="font-semibold text-white">Tucson, Arizona</span>, RITUAL is built around the local drift scene and the people behind it. We’re a community-focused streetwear brand driven by passion, style, and the culture behind the cars.
+              Founded in 2025 and based out of <span className="font-semibold text-white">Tucson, Arizona</span>,
+              RITUAL is built around the local drift scene and the people behind it. We’re a
+              community-focused streetwear brand driven by passion, style, and the culture behind
+              the cars.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-1">
@@ -418,16 +409,13 @@ export default function RitualDriftStore() {
         </div>
         <div className="grid gap-6 md:grid-cols-4">
           {GALLERY.map((item) => (
-            <div key={item.title} className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/5">
+            <div key={item.id} className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/5">
               <div
                 className="aspect-[4/5] bg-contain bg-center bg-no-repeat"
                 style={{
                   backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.2)), url(${item.image})`,
                 }}
               />
-              <div className="p-6">
-                
-              </div>
             </div>
           ))}
         </div>
