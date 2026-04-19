@@ -893,8 +893,7 @@ export default function RitualDriftStore() {
       <footer style={ui.footer}>
         <div style={ui.container}>
           <div style={ui.footerNote}>
-            Payment links are currently placeholder checkout URLs for PayPal and Stripe.
-            Swap them with your live product links when your first drop is ready.
+            Payment links are currently placeholder.
           </div>
 
           <div style={ui.footerTop}>
