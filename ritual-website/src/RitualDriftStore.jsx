@@ -745,7 +745,7 @@ export default function RitualDriftStore() {
                   RITUAL Signature Hoodie
                 </div>
                 <p style={ui.sectionText}>
-                  Clean front hit, loud back graphic, heavyweight feel.
+                  RITUAL.
                 </p>
                 <div style={{ marginTop: "16px" }}>
                   <button
@@ -823,10 +823,7 @@ export default function RitualDriftStore() {
               <div style={ui.sectionEyebrow}>About RITUAL</div>
               <h2 style={ui.sectionTitle}>More than merch.</h2>
               <p style={ui.sectionText}>
-                RITUAL is built around drift nights, smoke, speed, and a clean identity
-                that stands out in the pits. This site concept is designed to feel
-                aggressive, modern, and easy to shop from a phone when your audience
-                finds you through social media or at events.
+                RITUAL ABOUT.
               </p>
             </div>
 
