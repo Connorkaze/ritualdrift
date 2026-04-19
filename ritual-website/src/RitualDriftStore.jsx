@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function RitualDriftStore() {
   const scrollToSection = (id) => (e) => {
     e.preventDefault();
@@ -8,29 +10,31 @@ export default function RitualDriftStore() {
   };
 
   return (
-    <div style={{padding:40}}>
-      <h1>RITUAL Drift Co</h1>
-      <p>Your website is ready to deploy.</p>
+    <div style={{ minHeight: "100vh", background: "black", color: "white", padding: "40px", fontFamily: "sans-serif" }}>
+      <h1 style={{ marginBottom: "12px" }}>RITUAL Drift Co</h1>
+      <p style={{ color: "#bbb", marginBottom: "24px" }}>
+        Your website is live.
+      </p>
 
-      <nav style={{marginTop:20}}>
-        <a href="#shop" onClick={scrollToSection("shop")} style={{marginRight:20}}>Shop</a>
-        <a href="#gallery" onClick={scrollToSection("gallery")} style={{marginRight:20}}>Gallery</a>
-        <a href="#contact" onClick={scrollToSection("contact")}>Contact</a>
+      <nav style={{ display: "flex", gap: "20px", marginBottom: "40px" }}>
+        <a href="#shop" onClick={scrollToSection("shop")} style={{ color: "white" }}>Shop</a>
+        <a href="#gallery" onClick={scrollToSection("gallery")} style={{ color: "white" }}>Gallery</a>
+        <a href="#contact" onClick={scrollToSection("contact")} style={{ color: "white" }}>Contact</a>
       </nav>
 
-      <section id="shop" style={{marginTop:80}}>
+      <section id="shop" style={{ marginTop: "80px" }}>
         <h2>Shop</h2>
-        <p>Product placeholders will appear here.</p>
+        <p style={{ color: "#bbb" }}>Products coming soon.</p>
       </section>
 
-      <section id="gallery" style={{marginTop:80}}>
+      <section id="gallery" style={{ marginTop: "80px" }}>
         <h2>Gallery</h2>
-        <p>Gallery images will appear here.</p>
+        <p style={{ color: "#bbb" }}>Photos coming soon.</p>
       </section>
 
-      <section id="contact" style={{marginTop:80}}>
+      <section id="contact" style={{ marginTop: "80px" }}>
         <h2>Contact</h2>
-        <p>Instagram: @ritualdriftco</p>
+        <p style={{ color: "#bbb" }}>Instagram: @ritualdriftco</p>
       </section>
     </div>
   );
