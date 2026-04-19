@@ -828,10 +828,10 @@ export default function RitualDriftStore() {
 
             <div style={{ display: "grid", gap: "14px" }}>
               {[
-                "Dark motorsport-inspired visual language",
-                "Mobile-friendly shopping layout",
-                "Built to expand into real ecommerce",
-                "Strong brand sections for merch and team identity",
+                "RITUAL PLACEHOLDER",
+                "RITUAL PLACEHOLDERL",
+                "RITUAL PLACEHOLDERL",
+                "RITUAL PLACEHOLDER",
               ].map((item) => (
                 <div key={item} style={ui.featureCard}>
                   {item}
