@@ -511,6 +511,7 @@ export default function RitualDriftStore() {
   const styles = getResponsiveStyles();
   const [activeProductId, setActiveProductId] = useState(null);
   const [selectedSizes, setSelectedSizes] = useState({});
+  const [quantities, setQuantities] = useState({});
 
   const activeProduct = useMemo(
     () => PRODUCTS.find((product) => product.id === activeProductId) || null,
@@ -527,13 +528,23 @@ export default function RitualDriftStore() {
 
   const handleCheckout = (product) => {
     const selectedSize = selectedSizes[product.id];
+    const quantity = quantities[product.id] || 1;
+
     if (product.hasSizes && !selectedSize) {
       window.alert("Please select a size before checkout.");
+      return;
     }
+
+    window.alert(
+      `Proceeding to checkout:\n${product.name}\nQuantity: ${quantity}${
+        product.hasSizes ? `\nSize: ${selectedSize}` : ""
+      }`
+    );
   };
 
   if (activeProduct) {
     const selectedSize = selectedSizes[activeProduct.id];
+    const quantity = quantities[activeProduct.id] || 1;
 
     return (
       <div style={styles.page}>
@@ -581,6 +592,53 @@ export default function RitualDriftStore() {
                   </div>
                 )}
 
+                <div style={{ marginTop: "24px" }}>
+                  <div style={styles.eyebrow}>Quantity</div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <button
+                      style={styles.sizeBtn}
+                      onClick={() =>
+                        setQuantities((prev) => ({
+                          ...prev,
+                          [activeProduct.id]: Math.max(1, quantity - 1),
+                        }))
+                      }
+                    >
+                      -
+                    </button>
+
+                    <div
+                      style={{
+                        minWidth: "56px",
+                        textAlign: "center",
+                        fontWeight: 800,
+                        fontSize: "18px",
+                      }}
+                    >
+                      {quantity}
+                    </div>
+
+                    <button
+                      style={styles.sizeBtn}
+                      onClick={() =>
+                        setQuantities((prev) => ({
+                          ...prev,
+                          [activeProduct.id]: quantity + 1,
+                        }))
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
                 <div style={styles.checkoutRow}>
                   <button style={styles.primaryBtn} onClick={() => handleCheckout(activeProduct)}>
                     PayPal Checkout
@@ -612,10 +670,18 @@ export default function RitualDriftStore() {
             </div>
 
             <div style={styles.navLinks}>
-              <a href="#shop" onClick={scrollToSection("shop")} style={styles.navLink}>Shop</a>
-              <a href="#about" onClick={scrollToSection("about")} style={styles.navLink}>About</a>
-              <a href="#gallery" onClick={scrollToSection("gallery")} style={styles.navLink}>Gallery</a>
-              <a href="#contact" onClick={scrollToSection("contact")} style={styles.navLink}>Contact</a>
+              <a href="#shop" onClick={scrollToSection("shop")} style={styles.navLink}>
+                Shop
+              </a>
+              <a href="#about" onClick={scrollToSection("about")} style={styles.navLink}>
+                About
+              </a>
+              <a href="#gallery" onClick={scrollToSection("gallery")} style={styles.navLink}>
+                Gallery
+              </a>
+              <a href="#contact" onClick={scrollToSection("contact")} style={styles.navLink}>
+                Contact
+              </a>
             </div>
 
             <button style={styles.cartBtn}>Cart (0)</button>
@@ -635,8 +701,12 @@ export default function RitualDriftStore() {
               </p>
 
               <div style={styles.buttonRow}>
-                <button style={styles.primaryBtn} onClick={scrollToSection("shop")}>Shop Drops</button>
-                <button style={styles.secondaryBtn} onClick={scrollToSection("gallery")}>View Team</button>
+                <button style={styles.primaryBtn} onClick={scrollToSection("shop")}>
+                  Shop Drops
+                </button>
+                <button style={styles.secondaryBtn} onClick={scrollToSection("gallery")}>
+                  View Team
+                </button>
               </div>
             </div>
 
@@ -654,7 +724,10 @@ export default function RitualDriftStore() {
                 </div>
                 <p style={{ ...styles.sectionText, marginBottom: 0 }}>description unavailable</p>
                 <div style={{ marginTop: "16px" }}>
-                  <button style={styles.secondaryBtn} onClick={() => setActiveProductId("signature-hoodie")}>
+                  <button
+                    style={styles.secondaryBtn}
+                    onClick={() => setActiveProductId("signature-hoodie")}
+                  >
                     View Product
                   </button>
                 </div>
@@ -671,7 +744,11 @@ export default function RitualDriftStore() {
 
           <div style={styles.productsGrid}>
             {PRODUCTS.map((product) => (
-              <button key={product.id} style={styles.productCard} onClick={() => setActiveProductId(product.id)}>
+              <button
+                key={product.id}
+                style={styles.productCard}
+                onClick={() => setActiveProductId(product.id)}
+              >
                 <div
                   style={{
                     ...styles.productImage,
@@ -713,8 +790,15 @@ export default function RitualDriftStore() {
             </div>
 
             <div style={styles.infoGrid}>
-              {["Tucson-based brand", "Community focused", "Streetwear for the drift scene", "Founded in 2025"].map((item) => (
-                <div key={item} style={styles.infoCard}>{item}</div>
+              {[
+                "Tucson-based brand",
+                "Community focused",
+                "Streetwear for the drift scene",
+                "Founded in 2025",
+              ].map((item) => (
+                <div key={item} style={styles.infoCard}>
+                  {item}
+                </div>
               ))}
             </div>
           </div>
@@ -768,7 +852,14 @@ export default function RitualDriftStore() {
           </div>
 
           <div style={styles.paymentRow}>
-            <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+            <span
+              style={{
+                color: "rgba(255,255,255,0.7)",
+                fontSize: "12px",
+                textTransform: "uppercase",
+                letterSpacing: "0.12em",
+              }}
+            >
               Accepted Payments:
             </span>
             <span style={styles.paymentPill}>PayPal</span>
@@ -777,9 +868,17 @@ export default function RitualDriftStore() {
 
           <div style={styles.footerBottom}>
             <div>
-              <span style={{ color: "#fff", fontWeight: 900, letterSpacing: "0.22em" }}>RITUAL</span> — Drift Co
+              <span style={{ color: "#fff", fontWeight: 900, letterSpacing: "0.22em" }}>
+                RITUAL
+              </span>{" "}
+              — Drift Co
             </div>
-            <a href="https://instagram.com/ritualdriftco" target="_blank" rel="noopener noreferrer" style={styles.navLink}>
+            <a
+              href="https://instagram.com/ritualdriftco"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={styles.navLink}
+            >
               @ritualdriftco
             </a>
           </div>
