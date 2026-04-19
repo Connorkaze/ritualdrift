@@ -37,7 +37,7 @@ const PRODUCTS = [
     price: "$1",
     desc: "RITUAL.",
     longDesc:
-      "A bold display piece made for pit setups, garage walls, and event canopies. This is a straightforward brand statement piece built to stand out in person and in photos.",
+      "RITUAL.",
     hasSizes: false,
     image: placeholder,
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=pit-banner",
@@ -50,7 +50,7 @@ const PRODUCTS = [
     price: "$1",
     desc: "RITUAL.",
     longDesc:
-      "A simple add-on product that works well for supporters, event pickups, and online orders. Great for cars, laptops, boxes, helmets, and shop setups.",
+      "RITUAL.",
     hasSizes: false,
     image: placeholder,
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=logo-sticker-pack",
@@ -63,7 +63,7 @@ const PRODUCTS = [
     price: "$1",
     desc: "RITUAL.",
     longDesc:
-      "A display plate built for interior setups, garage walls, and show-car presentation. It keeps the RITUAL identity visible even when the car is parked.",
+      "RITUAL.",
     hasSizes: false,
     image: placeholder,
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=team-plate",
