@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import placeholder from "./placeholder.jpg";
 
 const SIZES = ["S", "M", "L", "XL"];
 
@@ -12,8 +13,7 @@ const PRODUCTS = [
     longDesc:
       "A clean essential built for daily wear, track nights, and event weekends. The Signature Tee is designed as an easy first-drop staple with a strong branded look.",
     hasSizes: true,
-    image:
-      "/placeholder.jpg",
+    image: placeholder,
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=signature-tee",
     cardLink: "https://buy.stripe.com/test_placeholder_signature_tee",
   },
@@ -24,12 +24,11 @@ const PRODUCTS = [
     price: "$68",
     desc: "Premium fleece hoodie built for cold nights at the lot.",
     longDesc:
-      "A heavier layer for cooler evenings and track mornings. The Trackside Hoodie is meant to feel substantial, clean, and easy to wear with the rest of the RITUAL lineup.",
+      "A heavier layer for cooler evenings and track mornings. The Signature Hoodie is meant to feel substantial, clean, and easy to wear with the rest of the RITUAL lineup.",
     hasSizes: true,
-    image:
-      "/placeholder.jpg",
-    paypalLink: "https://www.paypal.com/checkoutnow?placeholder=trackside-hoodie",
-    cardLink: "https://buy.stripe.com/test_placeholder_trackside_hoodie",
+    image: placeholder,
+    paypalLink: "https://www.paypal.com/checkoutnow?placeholder=signature-hoodie",
+    cardLink: "https://buy.stripe.com/test_placeholder_signature_hoodie",
   },
   {
     id: "pit-banner",
@@ -40,8 +39,7 @@ const PRODUCTS = [
     longDesc:
       "A bold display piece made for pit setups, garage walls, and event canopies. This is a straightforward brand statement piece built to stand out in person and in photos.",
     hasSizes: false,
-    image:
-      "/placeholder.jpg",
+    image: placeholder,
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=pit-banner",
     cardLink: "https://buy.stripe.com/test_placeholder_pit_banner",
   },
@@ -54,8 +52,7 @@ const PRODUCTS = [
     longDesc:
       "A simple add-on product that works well for supporters, event pickups, and online orders. Great for cars, laptops, boxes, helmets, and shop setups.",
     hasSizes: false,
-    image:
-      "/placeholder.jpg",
+    image: placeholder,
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=logo-sticker-pack",
     cardLink: "https://buy.stripe.com/test_placeholder_logo_sticker_pack",
   },
@@ -68,24 +65,9 @@ const PRODUCTS = [
     longDesc:
       "A display plate built for interior setups, garage walls, and show-car presentation. It keeps the RITUAL identity visible even when the car is parked.",
     hasSizes: false,
-    image:
-      "/placeholder.jpg",
+    image: placeholder,
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=team-plate",
     cardLink: "https://buy.stripe.com/test_placeholder_team_plate",
-  },
-  {
-    id: "midnight-tee",
-    name: "Midnight Tee",
-    category: "Shirts",
-    price: "$38",
-    desc: "Minimal front, aggressive back graphic inspired by drift lines.",
-    longDesc:
-      "A slightly more graphic-driven tee meant for a louder look. This works as a second-drop piece or a stronger visual option next to the Signature Tee.",
-    hasSizes: true,
-    image:
-      "/placeholder.jpg",
-    paypalLink: "https://www.paypal.com/checkoutnow?placeholder=midnight-tee",
-    cardLink: "https://buy.stripe.com/test_placeholder_midnight_tee",
   },
 ];
 
@@ -93,20 +75,17 @@ const GALLERY = [
   {
     title: "Night Runs",
     text: "Built for the drivers, pit crews, and late-night sessions that make the culture.",
-    image:
-      "/placeholder.jpg",
+    image: placeholder,
   },
   {
     title: "Track Presence",
     text: "Merch and visuals that hit as hard as the cars look under lights.",
-    image:
-      "/placeholder.jpg",
+    image: placeholder,
   },
   {
     title: "Crew Energy",
     text: "RITUAL is about style, noise, smoke, and the people behind it.",
-    image:
-      "/placeholder.jpg",
+    image: placeholder,
   },
 ];
 
@@ -249,8 +228,10 @@ const styles = {
   },
   heroImage: {
     height: "520px",
-    backgroundSize: "cover",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
+    backgroundColor: "#000",
   },
   heroCardBody: {
     padding: "22px",
@@ -317,8 +298,10 @@ const styles = {
   },
   productImage: {
     height: "260px",
-    backgroundSize: "cover",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
+    backgroundColor: "#000",
   },
   cardBody: {
     padding: "20px",
@@ -386,8 +369,10 @@ const styles = {
   },
   galleryImage: {
     height: "360px",
-    backgroundSize: "cover",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
+    backgroundColor: "#000",
   },
   contactGrid: {
     display: "grid",
@@ -474,8 +459,10 @@ const styles = {
   },
   productPageImage: {
     height: "680px",
-    backgroundSize: "cover",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
+    backgroundColor: "#000",
     borderRadius: "28px",
     border: "1px solid rgba(255,255,255,0.1)",
   },
@@ -617,7 +604,7 @@ export default function RitualDriftStore() {
               <div
                 style={{
                   ...ui.productPageImage,
-                  backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url(${activeProduct.image})`,
+                  backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.15)), url(${activeProduct.image})`,
                 }}
               />
 
@@ -749,13 +736,13 @@ export default function RitualDriftStore() {
                 style={{
                   ...ui.heroImage,
                   backgroundImage:
-                    "linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.52)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=80')",
+                    `linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.15)), url(${placeholder})`,
                 }}
               />
               <div style={ui.heroCardBody}>
                 <div style={ui.sectionEyebrow}>Featured Drop</div>
                 <div style={{ fontSize: "28px", fontWeight: 900, textTransform: "uppercase" }}>
-                  RITUAL Core Hoodie
+                  RITUAL Signature Hoodie
                 </div>
                 <p style={ui.sectionText}>
                   Clean front hit, loud back graphic, heavyweight feel.
@@ -763,7 +750,7 @@ export default function RitualDriftStore() {
                 <div style={{ marginTop: "16px" }}>
                   <button
                     type="button"
-                    onClick={() => openProductPage("trackside-hoodie")}
+                    onClick={() => openProductPage("signature-hoodie")}
                     style={ui.secondaryBtn}
                   >
                     View Product
@@ -803,7 +790,7 @@ export default function RitualDriftStore() {
                 <div
                   style={{
                     ...ui.productImage,
-                    backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.48)), url(${product.image})`,
+                    backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.15)), url(${product.image})`,
                   }}
                 />
                 <div style={ui.cardBody}>
@@ -870,7 +857,7 @@ export default function RitualDriftStore() {
                 <div
                   style={{
                     ...ui.galleryImage,
-                    backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.48)), url(${item.image})`,
+                    backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.15)), url(${item.image})`,
                   }}
                 />
                 <div style={ui.cardBody}>
