@@ -13,7 +13,7 @@ const PRODUCTS = [
       "A clean essential built for daily wear, track nights, and event weekends. The Signature Tee is designed as an easy first-drop staple with a strong branded look.",
     hasSizes: true,
     image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80",
+      "/placeholder.jpg",
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=signature-tee",
     cardLink: "https://buy.stripe.com/test_placeholder_signature_tee",
   },
@@ -27,7 +27,7 @@ const PRODUCTS = [
       "A heavier layer for cooler evenings and track mornings. The Trackside Hoodie is meant to feel substantial, clean, and easy to wear with the rest of the RITUAL lineup.",
     hasSizes: true,
     image:
-      "https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1200&q=80",
+      "/placeholder.jpg",
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=trackside-hoodie",
     cardLink: "https://buy.stripe.com/test_placeholder_trackside_hoodie",
   },
@@ -41,7 +41,7 @@ const PRODUCTS = [
       "A bold display piece made for pit setups, garage walls, and event canopies. This is a straightforward brand statement piece built to stand out in person and in photos.",
     hasSizes: false,
     image:
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80",
+      "/placeholder.jpg",
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=pit-banner",
     cardLink: "https://buy.stripe.com/test_placeholder_pit_banner",
   },
@@ -55,7 +55,7 @@ const PRODUCTS = [
       "A simple add-on product that works well for supporters, event pickups, and online orders. Great for cars, laptops, boxes, helmets, and shop setups.",
     hasSizes: false,
     image:
-      "https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?auto=format&fit=crop&w=1200&q=80",
+      "/placeholder.jpg",
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=logo-sticker-pack",
     cardLink: "https://buy.stripe.com/test_placeholder_logo_sticker_pack",
   },
@@ -69,7 +69,7 @@ const PRODUCTS = [
       "A display plate built for interior setups, garage walls, and show-car presentation. It keeps the RITUAL identity visible even when the car is parked.",
     hasSizes: false,
     image:
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80",
+      "/placeholder.jpg",
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=team-plate",
     cardLink: "https://buy.stripe.com/test_placeholder_team_plate",
   },
@@ -83,7 +83,7 @@ const PRODUCTS = [
       "A slightly more graphic-driven tee meant for a louder look. This works as a second-drop piece or a stronger visual option next to the Signature Tee.",
     hasSizes: true,
     image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=80",
+      "/placeholder.jpg",
     paypalLink: "https://www.paypal.com/checkoutnow?placeholder=midnight-tee",
     cardLink: "https://buy.stripe.com/test_placeholder_midnight_tee",
   },
@@ -94,19 +94,19 @@ const GALLERY = [
     title: "Night Runs",
     text: "Built for the drivers, pit crews, and late-night sessions that make the culture.",
     image:
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80",
+      "/placeholder.jpg",
   },
   {
     title: "Track Presence",
     text: "Merch and visuals that hit as hard as the cars look under lights.",
     image:
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=80",
+      "/placeholder.jpg",
   },
   {
     title: "Crew Energy",
     text: "RITUAL is about style, noise, smoke, and the people behind it.",
     image:
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=80",
+      "/placeholder.jpg",
   },
 ];
 
