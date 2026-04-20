@@ -543,6 +543,17 @@ const baseStyles = {
     color: "#fff",
     fontWeight: 800,
   },
+  cartNotice: {
+    marginTop: "16px",
+    border: "1px solid rgba(255,255,255,0.12)",
+    background: "rgba(255,255,255,0.06)",
+    color: "#fff",
+    borderRadius: "16px",
+    padding: "12px 14px",
+    fontSize: "13px",
+    letterSpacing: "0.04em",
+    maxWidth: "420px",
+  },
 };
 
 function getResponsiveStyles() {
@@ -576,6 +587,7 @@ export default function RitualDriftStore() {
   const [selectedSizes, setSelectedSizes] = useState({});
   const [quantities, setQuantities] = useState({});
   const [cartItems, setCartItems] = useState([]);
+  const [cartNotice, setCartNotice] = useState("");
 
   const activeProduct = useMemo(
     () => PRODUCTS.find((product) => product.id === activeProductId) || null,
@@ -637,15 +649,18 @@ export default function RitualDriftStore() {
   const openProductPage = (productId) => {
     setActiveProductId(productId);
     setCurrentPage("product");
+    setCartNotice("");
   };
 
   const openCartPage = () => {
     setCurrentPage("cart");
+    setCartNotice("");
   };
 
   const openStorePage = () => {
     setCurrentPage("store");
     setActiveProductId(null);
+    setCartNotice("");
   };
 
   const handleAddToCart = (product) => {
@@ -683,7 +698,11 @@ export default function RitualDriftStore() {
       ];
     });
 
-    window.alert(`${product.name} added to cart.`);
+    setCartNotice(`${product.name} added to cart`);
+
+    setTimeout(() => {
+      setCartNotice("");
+    }, 2500);
   };
 
   const updateCartItemQuantity = (index, change) => {
@@ -847,6 +866,8 @@ export default function RitualDriftStore() {
                     View Cart
                   </button>
                 </div>
+
+                {cartNotice && <div style={styles.cartNotice}>{cartNotice}</div>}
               </div>
             </div>
           </div>
