@@ -598,21 +598,40 @@ export default function RitualDriftStore() {
 
   const scrollToSection = (id) => (event) => {
     event.preventDefault();
+
+    const scrollNow = () => {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    };
+
     if (currentPage !== "store") {
       setCurrentPage("store");
-      setTimeout(() => {
-        const section = document.getElementById(id);
-        if (section) {
-          section.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 0);
+      setActiveProductId(null);
+      setTimeout(scrollNow, 0);
       return;
     }
 
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollNow();
+  };
+
+  const openShopSection = () => {
+    const scrollNow = () => {
+      const section = document.getElementById("shop");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    };
+
+    if (currentPage !== "store") {
+      setCurrentPage("store");
+      setActiveProductId(null);
+      setTimeout(scrollNow, 0);
+      return;
     }
+
+    scrollNow();
   };
 
   const openProductPage = (productId) => {
@@ -692,7 +711,7 @@ export default function RitualDriftStore() {
           </div>
 
           <div style={styles.navLinks}>
-            <button onClick={openStorePage} style={styles.navLink}>
+            <button onClick={openShopSection} style={styles.navLink}>
               Shop
             </button>
             {currentPage === "store" && (
