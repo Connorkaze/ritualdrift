@@ -110,6 +110,9 @@ const baseStyles = {
     letterSpacing: "0.14em",
     fontSize: "12px",
     cursor: "pointer",
+    background: "none",
+    border: "none",
+    padding: 0,
   },
   cartBtn: {
     border: "1px solid rgba(255,255,255,0.18)",
@@ -568,6 +571,7 @@ function getResponsiveStyles() {
 
 export default function RitualDriftStore() {
   const styles = getResponsiveStyles();
+  const [currentPage, setCurrentPage] = useState("store");
   const [activeProductId, setActiveProductId] = useState(null);
   const [selectedSizes, setSelectedSizes] = useState({});
   const [quantities, setQuantities] = useState({});
@@ -578,6 +582,9 @@ export default function RitualDriftStore() {
     [activeProductId]
   );
 
+  const getNumericPrice = (price) =>
+    Number(String(price).replace(/[^0-9.]/g, "")) || 0;
+
   const cartCount = useMemo(
     () => cartItems.reduce((total, item) => total + item.quantity, 0),
     [cartItems]
@@ -585,17 +592,41 @@ export default function RitualDriftStore() {
 
   const cartSubtotal = useMemo(() => {
     return cartItems.reduce((total, item) => {
-      const numericPrice = Number(String(item.price).replace(/[^0-9.]/g, "")) || 0;
-      return total + numericPrice * item.quantity;
+      return total + getNumericPrice(item.price) * item.quantity;
     }, 0);
   }, [cartItems]);
 
   const scrollToSection = (id) => (event) => {
     event.preventDefault();
+    if (currentPage !== "store") {
+      setCurrentPage("store");
+      setTimeout(() => {
+        const section = document.getElementById(id);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 0);
+      return;
+    }
+
     const section = document.getElementById(id);
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+  };
+
+  const openProductPage = (productId) => {
+    setActiveProductId(productId);
+    setCurrentPage("product");
+  };
+
+  const openCartPage = () => {
+    setCurrentPage("cart");
+  };
+
+  const openStorePage = () => {
+    setCurrentPage("store");
+    setActiveProductId(null);
   };
 
   const handleAddToCart = (product) => {
@@ -651,36 +682,53 @@ export default function RitualDriftStore() {
     setCartItems((prev) => prev.filter((_, itemIndex) => itemIndex !== index));
   };
 
-  if (activeProduct) {
+  const renderTopNav = () => (
+    <div style={styles.navWrap}>
+      <div style={styles.container}>
+        <nav style={styles.nav}>
+          <div>
+            <div style={styles.brandTitle}>RITUAL</div>
+            <div style={styles.brandSub}>Drift Co</div>
+          </div>
+
+          <div style={styles.navLinks}>
+            <button onClick={openStorePage} style={styles.navLink}>
+              Shop
+            </button>
+            {currentPage === "store" && (
+              <>
+                <a href="#about" onClick={scrollToSection("about")} style={styles.navLink}>
+                  About
+                </a>
+                <a href="#gallery" onClick={scrollToSection("gallery")} style={styles.navLink}>
+                  Gallery
+                </a>
+                <a href="#contact" onClick={scrollToSection("contact")} style={styles.navLink}>
+                  Contact
+                </a>
+              </>
+            )}
+          </div>
+
+          <button style={styles.cartBtn} onClick={openCartPage}>
+            Cart ({cartCount})
+          </button>
+        </nav>
+      </div>
+    </div>
+  );
+
+  if (currentPage === "product" && activeProduct) {
     const selectedSize = selectedSizes[activeProduct.id];
     const quantity = quantities[activeProduct.id] || 1;
 
     return (
       <div style={styles.page}>
-        <div style={styles.navWrap}>
-          <div style={styles.container}>
-            <nav style={styles.nav}>
-              <div>
-                <div style={styles.brandTitle}>RITUAL</div>
-                <div style={styles.brandSub}>Drift Co</div>
-              </div>
-
-              <div style={styles.navLinks}>
-                <a href="#shop" onClick={() => setActiveProductId(null)} style={styles.navLink}>
-                  Shop
-                </a>
-              </div>
-
-              <button style={styles.cartBtn} onClick={() => setActiveProductId(null)}>
-                Cart ({cartCount})
-              </button>
-            </nav>
-          </div>
-        </div>
+        {renderTopNav()}
 
         <div style={styles.container}>
           <div style={styles.productPageWrap}>
-            <button style={styles.backBtn} onClick={() => setActiveProductId(null)}>
+            <button style={styles.backBtn} onClick={openStorePage}>
               Back to Shop
             </button>
 
@@ -776,8 +824,8 @@ export default function RitualDriftStore() {
                   >
                     Add to Cart
                   </button>
-                  <button style={styles.secondaryBtn} onClick={() => setActiveProductId(null)}>
-                    Back to Shop
+                  <button style={styles.secondaryBtn} onClick={openCartPage}>
+                    View Cart
                   </button>
                 </div>
               </div>
@@ -788,37 +836,114 @@ export default function RitualDriftStore() {
     );
   }
 
-  return (
-    <div style={styles.page}>
-      <div style={styles.navWrap}>
+  if (currentPage === "cart") {
+    return (
+      <div style={styles.page}>
+        {renderTopNav()}
+
         <div style={styles.container}>
-          <nav style={styles.nav}>
-            <div>
-              <div style={styles.brandTitle}>RITUAL</div>
-              <div style={styles.brandSub}>Drift Co</div>
-            </div>
-
-            <div style={styles.navLinks}>
-              <a href="#shop" onClick={scrollToSection("shop")} style={styles.navLink}>
-                Shop
-              </a>
-              <a href="#about" onClick={scrollToSection("about")} style={styles.navLink}>
-                About
-              </a>
-              <a href="#gallery" onClick={scrollToSection("gallery")} style={styles.navLink}>
-                Gallery
-              </a>
-              <a href="#contact" onClick={scrollToSection("contact")} style={styles.navLink}>
-                Contact
-              </a>
-            </div>
-
-            <button style={styles.cartBtn} onClick={scrollToSection("cart")}>
-              Cart ({cartCount})
+          <div style={styles.productPageWrap}>
+            <button style={styles.backBtn} onClick={openStorePage}>
+              Back to Shop
             </button>
-          </nav>
+
+            <div style={{ maxWidth: "900px" }}>
+              <div style={styles.badge}>Cart</div>
+              <h1 style={{ ...styles.sectionTitle, marginTop: 0 }}>Your Cart</h1>
+
+              {cartItems.length === 0 ? (
+                <div style={styles.footerNote}>Your cart is currently empty.</div>
+              ) : (
+                <>
+                  <div style={{ display: "grid", gap: "14px", marginTop: "24px" }}>
+                    {cartItems.map((item, index) => {
+                      const lineTotal = getNumericPrice(item.price) * item.quantity;
+
+                      return (
+                        <div
+                          key={`${item.id}-${item.size || "nosize"}-${index}`}
+                          style={styles.cartItemRow}
+                        >
+                          <div style={styles.cartItemTop}>
+                            <div>
+                              <div style={{ fontWeight: 800, fontSize: "16px", color: "#fff" }}>
+                                {item.name}
+                              </div>
+                              <div style={{ marginTop: "6px", color: "rgba(255,255,255,0.7)" }}>
+                                {item.size ? `Size: ${item.size} • ` : ""}
+                                Price: {item.price}
+                              </div>
+                              <div style={{ marginTop: "6px", color: "#fff", fontWeight: 700 }}>
+                                Line Total: ${lineTotal.toFixed(2)}
+                              </div>
+                            </div>
+
+                            <button style={styles.removeBtn} onClick={() => removeCartItem(index)}>
+                              Remove
+                            </button>
+                          </div>
+
+                          <div style={styles.cartControls}>
+                            <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "13px" }}>
+                              Quantity
+                            </span>
+
+                            <button
+                              style={styles.qtyBtn}
+                              onClick={() => updateCartItemQuantity(index, -1)}
+                            >
+                              -
+                            </button>
+
+                            <div
+                              style={{
+                                minWidth: "32px",
+                                textAlign: "center",
+                                fontWeight: 800,
+                              }}
+                            >
+                              {item.quantity}
+                            </div>
+
+                            <button
+                              style={styles.qtyBtn}
+                              onClick={() => updateCartItemQuantity(index, 1)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div style={styles.subtotalCard}>
+                    <div style={styles.subtotalRow}>
+                      <span>Subtotal</span>
+                      <span>${cartSubtotal.toFixed(2)}</span>
+                    </div>
+                  </div>
+
+                  <div style={{ ...styles.footerNote, marginTop: "18px" }}>
+                    Payment links are currently placeholder checkout URLs for PayPal and Stripe.
+                  </div>
+
+                  <div style={styles.checkoutRow}>
+                    <button style={styles.primaryBtn}>PayPal Checkout</button>
+                    <button style={styles.secondaryBtn}>Card Checkout</button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div style={styles.page}>
+      {renderTopNav()}
 
       <section style={styles.hero}>
         <div style={styles.container}>
@@ -857,7 +982,7 @@ export default function RitualDriftStore() {
                 <div style={{ marginTop: "16px" }}>
                   <button
                     style={styles.secondaryBtn}
-                    onClick={() => setActiveProductId("signature-hoodie")}
+                    onClick={() => openProductPage("signature-hoodie")}
                   >
                     View Product
                   </button>
@@ -878,7 +1003,7 @@ export default function RitualDriftStore() {
               <button
                 key={product.id}
                 style={styles.productCard}
-                onClick={() => setActiveProductId(product.id)}
+                onClick={() => openProductPage(product.id)}
               >
                 <div
                   style={{
@@ -973,86 +1098,6 @@ export default function RitualDriftStore() {
               <textarea style={styles.textarea} placeholder="Message" />
               <button style={styles.primaryBtn}>Send Inquiry</button>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="cart" style={styles.section}>
-        <div style={styles.container}>
-          <div style={styles.eyebrow}>Cart</div>
-          <h2 style={styles.sectionTitle}>Your Cart</h2>
-
-          {cartItems.length === 0 ? (
-            <div style={styles.footerNote}>Your cart is currently empty.</div>
-          ) : (
-            <>
-              <div style={{ display: "grid", gap: "14px", marginTop: "24px" }}>
-                {cartItems.map((item, index) => (
-                  <div key={`${item.id}-${item.size || "nosize"}-${index}`} style={styles.cartItemRow}>
-                    <div style={styles.cartItemTop}>
-                      <div>
-                        <div style={{ fontWeight: 800, fontSize: "16px", color: "#fff" }}>
-                          {item.name}
-                        </div>
-                        <div style={{ marginTop: "6px", color: "rgba(255,255,255,0.7)" }}>
-                          {item.size ? `Size: ${item.size} • ` : ""}Price: {item.price}
-                        </div>
-                      </div>
-
-                      <button style={styles.removeBtn} onClick={() => removeCartItem(index)}>
-                        Remove
-                      </button>
-                    </div>
-
-                    <div style={styles.cartControls}>
-                      <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "13px" }}>
-                        Quantity
-                      </span>
-
-                      <button
-                        style={styles.qtyBtn}
-                        onClick={() => updateCartItemQuantity(index, -1)}
-                      >
-                        -
-                      </button>
-
-                      <div
-                        style={{
-                          minWidth: "32px",
-                          textAlign: "center",
-                          fontWeight: 800,
-                        }}
-                      >
-                        {item.quantity}
-                      </div>
-
-                      <button
-                        style={styles.qtyBtn}
-                        onClick={() => updateCartItemQuantity(index, 1)}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div style={styles.subtotalCard}>
-                <div style={styles.subtotalRow}>
-                  <span>Subtotal</span>
-                  <span>${cartSubtotal.toFixed(2)}</span>
-                </div>
-              </div>
-            </>
-          )}
-
-          <div style={{ ...styles.footerNote, marginTop: "18px" }}>
-            Payment links are currently placeholder checkout URLs for PayPal and Stripe.
-          </div>
-
-          <div style={styles.checkoutRow}>
-            <button style={styles.primaryBtn}>PayPal Checkout</button>
-            <button style={styles.secondaryBtn}>Card Checkout</button>
           </div>
         </div>
       </section>
