@@ -481,6 +481,65 @@ const baseStyles = {
     maxWidth: "480px",
     marginTop: "24px",
   },
+  cartItemRow: {
+    border: "1px solid rgba(255,255,255,0.1)",
+    background: "rgba(255,255,255,0.04)",
+    borderRadius: "18px",
+    padding: "16px",
+  },
+  cartItemTop: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "16px",
+    alignItems: "start",
+    flexWrap: "wrap",
+  },
+  cartControls: {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    flexWrap: "wrap",
+    marginTop: "14px",
+  },
+  qtyBtn: {
+    borderRadius: "999px",
+    border: "1px solid rgba(255,255,255,0.16)",
+    background: "transparent",
+    color: "#fff",
+    padding: "8px 12px",
+    minWidth: "42px",
+    fontWeight: 800,
+    cursor: "pointer",
+  },
+  removeBtn: {
+    borderRadius: "999px",
+    border: "1px solid rgba(255,255,255,0.16)",
+    background: "transparent",
+    color: "#fff",
+    padding: "8px 14px",
+    textTransform: "uppercase",
+    letterSpacing: "0.12em",
+    fontSize: "11px",
+    fontWeight: 800,
+    cursor: "pointer",
+  },
+  subtotalCard: {
+    border: "1px solid rgba(255,255,255,0.1)",
+    background: "rgba(255,255,255,0.04)",
+    borderRadius: "18px",
+    padding: "18px 16px",
+    marginTop: "18px",
+    maxWidth: "480px",
+  },
+  subtotalRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "12px",
+    fontSize: "16px",
+    color: "#fff",
+    fontWeight: 800,
+  },
 };
 
 function getResponsiveStyles() {
@@ -512,11 +571,24 @@ export default function RitualDriftStore() {
   const [activeProductId, setActiveProductId] = useState(null);
   const [selectedSizes, setSelectedSizes] = useState({});
   const [quantities, setQuantities] = useState({});
+  const [cartItems, setCartItems] = useState([]);
 
   const activeProduct = useMemo(
     () => PRODUCTS.find((product) => product.id === activeProductId) || null,
     [activeProductId]
   );
+
+  const cartCount = useMemo(
+    () => cartItems.reduce((total, item) => total + item.quantity, 0),
+    [cartItems]
+  );
+
+  const cartSubtotal = useMemo(() => {
+    return cartItems.reduce((total, item) => {
+      const numericPrice = Number(String(item.price).replace(/[^0-9.]/g, "")) || 0;
+      return total + numericPrice * item.quantity;
+    }, 0);
+  }, [cartItems]);
 
   const scrollToSection = (id) => (event) => {
     event.preventDefault();
@@ -526,20 +598,57 @@ export default function RitualDriftStore() {
     }
   };
 
-  const handleCheckout = (product) => {
+  const handleAddToCart = (product) => {
     const selectedSize = selectedSizes[product.id];
     const quantity = quantities[product.id] || 1;
 
     if (product.hasSizes && !selectedSize) {
-      window.alert("Please select a size before checkout.");
+      window.alert("Please select a size before adding to cart.");
       return;
     }
 
-    window.alert(
-      `Proceeding to checkout:\n${product.name}\nQuantity: ${quantity}${
-        product.hasSizes ? `\nSize: ${selectedSize}` : ""
-      }`
+    setCartItems((prev) => {
+      const matchIndex = prev.findIndex(
+        (item) => item.id === product.id && item.size === (selectedSize || null)
+      );
+
+      if (matchIndex !== -1) {
+        const updated = [...prev];
+        updated[matchIndex] = {
+          ...updated[matchIndex],
+          quantity: updated[matchIndex].quantity + quantity,
+        };
+        return updated;
+      }
+
+      return [
+        ...prev,
+        {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          size: selectedSize || null,
+          quantity,
+        },
+      ];
+    });
+
+    window.alert(`${product.name} added to cart.`);
+  };
+
+  const updateCartItemQuantity = (index, change) => {
+    setCartItems((prev) =>
+      prev.flatMap((item, itemIndex) => {
+        if (itemIndex !== index) return [item];
+        const nextQuantity = item.quantity + change;
+        if (nextQuantity <= 0) return [];
+        return [{ ...item, quantity: nextQuantity }];
+      })
     );
+  };
+
+  const removeCartItem = (index) => {
+    setCartItems((prev) => prev.filter((_, itemIndex) => itemIndex !== index));
   };
 
   if (activeProduct) {
@@ -548,6 +657,27 @@ export default function RitualDriftStore() {
 
     return (
       <div style={styles.page}>
+        <div style={styles.navWrap}>
+          <div style={styles.container}>
+            <nav style={styles.nav}>
+              <div>
+                <div style={styles.brandTitle}>RITUAL</div>
+                <div style={styles.brandSub}>Drift Co</div>
+              </div>
+
+              <div style={styles.navLinks}>
+                <a href="#shop" onClick={() => setActiveProductId(null)} style={styles.navLink}>
+                  Shop
+                </a>
+              </div>
+
+              <button style={styles.cartBtn} onClick={() => setActiveProductId(null)}>
+                Cart ({cartCount})
+              </button>
+            </nav>
+          </div>
+        </div>
+
         <div style={styles.container}>
           <div style={styles.productPageWrap}>
             <button style={styles.backBtn} onClick={() => setActiveProductId(null)}>
@@ -640,16 +770,15 @@ export default function RitualDriftStore() {
                 </div>
 
                 <div style={styles.checkoutRow}>
-                  <button style={styles.primaryBtn} onClick={() => handleCheckout(activeProduct)}>
-                    PayPal Checkout
+                  <button
+                    style={styles.primaryBtn}
+                    onClick={() => handleAddToCart(activeProduct)}
+                  >
+                    Add to Cart
                   </button>
-                  <button style={styles.secondaryBtn} onClick={() => handleCheckout(activeProduct)}>
-                    Card Checkout
+                  <button style={styles.secondaryBtn} onClick={() => setActiveProductId(null)}>
+                    Back to Shop
                   </button>
-                </div>
-
-                <div style={{ ...styles.footerNote, marginTop: "18px" }}>
-                  Payment links are currently placeholder checkout URLs for PayPal and Stripe.
                 </div>
               </div>
             </div>
@@ -684,7 +813,9 @@ export default function RitualDriftStore() {
               </a>
             </div>
 
-            <button style={styles.cartBtn}>Cart (0)</button>
+            <button style={styles.cartBtn} onClick={scrollToSection("cart")}>
+              Cart ({cartCount})
+            </button>
           </nav>
         </div>
       </div>
@@ -782,10 +913,10 @@ export default function RitualDriftStore() {
               </div>
               <h2 style={styles.sectionTitle}>More than merch.</h2>
               <p style={styles.sectionText}>
-                Founded in 2025 and based out of <strong style={{ color: "#fff" }}>Tucson, Arizona</strong>,
-                RITUAL is built around the local drift scene and the people behind it. We’re a
-                community-focused streetwear brand driven by passion, style, and the culture behind
-                the cars.
+                Founded in 2025 and based out of{" "}
+                <strong style={{ color: "#fff" }}>Tucson, Arizona</strong>, RITUAL is built around
+                the local drift scene and the people behind it. We’re a community-focused
+                streetwear brand driven by passion, style, and the culture behind the cars.
               </p>
             </div>
 
@@ -831,7 +962,8 @@ export default function RitualDriftStore() {
               <div style={styles.eyebrow}>Contact / Booking</div>
               <h2 style={styles.sectionTitle}>Reach the team.</h2>
               <p style={styles.sectionText}>
-                For collabs, team updates, and questions, set your socials and contact details here.
+                For collabs, team updates, and questions, set your socials and contact details
+                here.
               </p>
             </div>
 
@@ -845,12 +977,88 @@ export default function RitualDriftStore() {
         </div>
       </section>
 
-      <footer style={styles.footer}>
+      <section id="cart" style={styles.section}>
         <div style={styles.container}>
-          <div style={styles.footerNote}>
+          <div style={styles.eyebrow}>Cart</div>
+          <h2 style={styles.sectionTitle}>Your Cart</h2>
+
+          {cartItems.length === 0 ? (
+            <div style={styles.footerNote}>Your cart is currently empty.</div>
+          ) : (
+            <>
+              <div style={{ display: "grid", gap: "14px", marginTop: "24px" }}>
+                {cartItems.map((item, index) => (
+                  <div key={`${item.id}-${item.size || "nosize"}-${index}`} style={styles.cartItemRow}>
+                    <div style={styles.cartItemTop}>
+                      <div>
+                        <div style={{ fontWeight: 800, fontSize: "16px", color: "#fff" }}>
+                          {item.name}
+                        </div>
+                        <div style={{ marginTop: "6px", color: "rgba(255,255,255,0.7)" }}>
+                          {item.size ? `Size: ${item.size} • ` : ""}Price: {item.price}
+                        </div>
+                      </div>
+
+                      <button style={styles.removeBtn} onClick={() => removeCartItem(index)}>
+                        Remove
+                      </button>
+                    </div>
+
+                    <div style={styles.cartControls}>
+                      <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "13px" }}>
+                        Quantity
+                      </span>
+
+                      <button
+                        style={styles.qtyBtn}
+                        onClick={() => updateCartItemQuantity(index, -1)}
+                      >
+                        -
+                      </button>
+
+                      <div
+                        style={{
+                          minWidth: "32px",
+                          textAlign: "center",
+                          fontWeight: 800,
+                        }}
+                      >
+                        {item.quantity}
+                      </div>
+
+                      <button
+                        style={styles.qtyBtn}
+                        onClick={() => updateCartItemQuantity(index, 1)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={styles.subtotalCard}>
+                <div style={styles.subtotalRow}>
+                  <span>Subtotal</span>
+                  <span>${cartSubtotal.toFixed(2)}</span>
+                </div>
+              </div>
+            </>
+          )}
+
+          <div style={{ ...styles.footerNote, marginTop: "18px" }}>
             Payment links are currently placeholder checkout URLs for PayPal and Stripe.
           </div>
 
+          <div style={styles.checkoutRow}>
+            <button style={styles.primaryBtn}>PayPal Checkout</button>
+            <button style={styles.secondaryBtn}>Card Checkout</button>
+          </div>
+        </div>
+      </section>
+
+      <footer style={styles.footer}>
+        <div style={styles.container}>
           <div style={styles.paymentRow}>
             <span
               style={{
